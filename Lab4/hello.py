@@ -14,7 +14,10 @@ def task():
 	if request.method == 'POST':
 		removeOption = request.form['remove']
 		category = request.form['category']
-		priority = int(request.form['priority'])
+		try:
+			priority = int(request.form['priority'])
+		except ValueError:
+			return redirect(url_for('task'))
 		description = request.form['desc']
 		if removeOption == 'true':
 			remove_task(category, priority, description)
