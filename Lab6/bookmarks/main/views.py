@@ -44,9 +44,11 @@ def add_link(request) :
 		for tag in tags:
 			try:
 				the_tag = Tag.objects.get(name=tag)
-				newLink.tags.add(the_tag)
-				newLink.save()
-			except ObjectDoesNotExist, e:
-				print "Couldn't find tag: ", tag
+			except ObjectDoesNotExist:
+				the_tag = Tag(name=tag)
+				the_tag.save()
+
+			newLink.tags.add(the_tag)
+			newLink.save()
 
 	return redirect(index)
